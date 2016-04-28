@@ -1,0 +1,32 @@
+{
+  "name": "ReactNativeSF",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "start": "node_modules/react-native/packager/packager.sh --reset-cache",
+    "clear": "rm -fr $TMPDIR/react-*",
+    "ios": "react-native run-ios"
+  },
+  "dependencies": {
+    "react": "^0.14.8",
+    "react-native": "^0.24.1"
+  },
+  "description": "in order to learn react-native, to develop segmentfault client",
+  "main": "index.os.js",
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lynzz/ReactNativeSF.git"
+  },
+  "keywords": [
+    "react",
+    "react-native",
+    "segmentfault"
+  ],
+  "author": "lynzz",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/lynzz/ReactNativeSF/issues"
+  },
+  "homepage": "https://github.com/lynzz/ReactNativeSF#readme"
+}
