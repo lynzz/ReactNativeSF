@@ -12,19 +12,17 @@ var {
 var QuestionsListRowView = React.createClass({
   render: function () {
     var data = this.props.item;
-    var cxt = this;
     return (
       <TouchableHighlight
         underlayColor={'#ccc'}>
-        <View
-          style={styles.rowView}>
-          <View style={styles.rowText}>
-            <Text style={styles.rowTextGroupName}>{data.title}</Text>
-            <Text style={styles.rowTextGroupInfo}>{data.user.name}</Text>
-          </View>
-          <View style={styles.rowText}>
+        <View style={styles.rowView}>
+          <View style={styles.rowMain}>
+            <Text style={styles.rowTextTitle}>{data.title}</Text>
             <Text style={styles.rowTextAnswers}>{data.answers}</Text>
-            <Text style={styles.rowTextGroupInfo}>{data.createdDate}</Text>
+          </View>
+          <View style={styles.rowSub}>
+            <Text style={styles.rowTextName}>{data.user.name}</Text>
+            <Text style={styles.rowTextDate}>{data.createdDate}</Text>
           </View>
         </View>
       </TouchableHighlight>
@@ -33,33 +31,44 @@ var QuestionsListRowView = React.createClass({
 });
 
 var styles = React.StyleSheet.create({
-  rowImage: {
-    width: 50,
-    height: 50
-  },
   rowView: {
-    flexDirection: 'row',
-    flex: 1,
     padding: 10,
     borderBottomWidth: 1,
     borderColor: '#E2E2E2'
   },
-  rowText: {
-    flex: 1,
-    marginLeft: 10,
-    alignSelf: 'center'
+  rowMain: {
+    flexDirection: 'row',
+    alignItems: 'flex-start'
   },
-  rowTextGroupName: {
-    fontWeight: 'bold',
-    justifyContent: 'center',
-    marginBottom: 10
+  rowSub: {
+    flexDirection: 'row',
+    paddingTop: 10,
+    alignItems: 'flex-start'
+  },
+  rowTextTitle: {
+    fontSize: 16,
+    paddingRight: 10,
+    flex: 1
+  },
+  rowTextName: {
+    flex: 1,
+    fontSize: 10,
+    color: '#666'
+  },
+  rowTextDate: {
+    fontSize: 10,
+    color: '#666'
   },
   rowTextAnswers: {
+    borderWidth: 1,
     borderColor: '#009a61',
-    color: '#009a61'
-  },
-  rowTextGroupInfo: {
-    color: '#666'
+    borderRadius: 3,
+    paddingLeft: 4,
+    paddingRight: 4,
+    paddingTop: 2,
+    paddingBottom: 2,
+    backgroundColor: '#009a61',
+    color: '#fff'
   }
 });
 

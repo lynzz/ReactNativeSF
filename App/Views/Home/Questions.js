@@ -1,8 +1,8 @@
 'use strict';
 
-var React = require('react-native');
-var Questions = require('../../Proxy/Questions');
-var QuestionsListView = require('../Questions/QuestionsList');
+const React = require('react-native');
+import Questions from '../../Proxy/Questions';
+import QuestionsListView from '../Questions/QuestionsList';
 
 var {
   Text,
@@ -16,6 +16,8 @@ var QuestionsView = React.createClass({
   getInitialState: function () {
     return {
       loaded: false,
+      dataRows: [],
+      page: {},
       dataSource: new ListView.DataSource({
         rowHasChanged: (r1, r2) => r1 !== r2
       })
@@ -28,6 +30,8 @@ var QuestionsView = React.createClass({
         <View style={styles.container}>
           <QuestionsListView
             data={this.state.dataSource}
+            loadData={this._fetchData}
+            page={this.state.page}
             style={styles.groupList} />
         </View>
       );
@@ -42,12 +46,18 @@ var QuestionsView = React.createClass({
   componentDidMount: function () {
     this._fetchData();
   },
-  _fetchData: function () {
+  _fetchData: function (page = 1) {
     var that = this;
-    Questions.getNewestQuestion(function (data) {
-      //console.log(data[0]);
+    if (page === 1) {
+      this.setState({dataRows: []});
+    }
+    Questions.getNewestQuestionByPage(page, function (data) {
+      console.log('_fetchData');
+      let rows = that.state.dataRows.concat(data.rows)
       that.setState({
-        dataSource: that.state.dataSource.cloneWithRows(data),
+        dataSource: that.state.dataSource.cloneWithRows(rows),
+        dataRows: rows,
+        page: data.page,
         loaded: true
       });
     }, function (err) {

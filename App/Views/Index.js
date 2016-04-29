@@ -14,6 +14,7 @@ var {
   NavigatorIOS,
   Image
   } = React;
+var Icon = require('react-native-vector-icons/Ionicons');
 
 var IndexView = React.createClass({
   statics: {
@@ -25,6 +26,11 @@ var IndexView = React.createClass({
     return {
       selectedBar: 'questions'
     };
+  },
+
+  componentWillMount: function() {
+    // https://github.com/facebook/react-native/issues/1403 prevents this to work for initial load
+    // Icon.getImageSource('ios-home-outline', 30).then((source) => this.setState({ homeIcon: source }));
   },
 
   _renderContent: function (title, component) {

@@ -17,4 +17,4 @@ var ReactNativeSF = React.createClass({
     );
   }
 });
-AppRegistry.registerComponent('news17173', () => ReactNativeSF);
+AppRegistry.registerComponent('ReactNativeSF', () => ReactNativeSF);

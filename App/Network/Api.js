@@ -6,6 +6,10 @@ export default {
     return `${API_URL}/question/newest`
   },
 
+  getNewestQuestionByPage (page) {
+    return `${API_URL}/question/newest?page=${page}`
+  },
+
   getQuestionDetail (id) {
     return `${API_URL}/question/${id}`
   },
