@@ -2,8 +2,7 @@
 
 var React = require('react-native');
 
-var ParseHTML = require('../../Common/ParseHTML')
-var ParseRule = require('../../Common/ParseRule')
+var HtmlContent = require('../../Common/HtmlContent')
 import Questions from '../../Proxy/Questions'
 
 var {
@@ -12,8 +11,11 @@ var {
   Image,
   ScrollView,
   ActivityIndicatorIOS,
+  Dimensions,
   TouchableHighlight
   } = React;
+
+var {height,width} = Dimensions.get('window')  
 
 var QuestionDetailView = React.createClass({
   getInitialState () {
@@ -25,8 +27,7 @@ var QuestionDetailView = React.createClass({
   },
   render: function () {
     if (this.state.loaded) {
-      let data = this.state.questionData;
-      console.log(data);
+      let data = this.state.questionData
       let Tags = data.tags.map((tag) => {
         return (
           <Text style={[styles.inlineShow, styles.qTag]} key={tag.id}>{tag.name}</Text>
@@ -43,9 +44,8 @@ var QuestionDetailView = React.createClass({
             </View>
             
             <View style={styles.qBody}>
-              <ParseHTML
-                code={data.parsedText}
-                customTagToStyle={ParseRule}
+              <HtmlContent
+                content={data.parsedText}
               />
             </View>
             <View style={[styles.flexRow, styles.userInfo]}>
@@ -56,14 +56,10 @@ var QuestionDetailView = React.createClass({
               <Text>{data.votes} 票</Text>
             </View>
           </View>
-          <View style={styles.answerCont}>
-            <View style={styles.answerHeader}>
-              <Text style={styles.grayText}>{data.answers} 回答</Text>
-            </View>
-            <View style={styles.answerBody}>
-              {this._renderAnswers()}
-            </View>
+          <View style={styles.answerHeader}>
+            <Text style={styles.grayText}>{data.answers} 回答</Text>
           </View>
+          {this._renderAnswers()}
         </ScrollView>
       );
     } else {
@@ -85,16 +81,15 @@ var QuestionDetailView = React.createClass({
     }
     return data.map((item) => {
       return (
-        <View key={item.id}>
+        <View style={styles.answerItem} key={item.id}>
           <View style={[styles.flexRow]}>
             <Image style={[styles.inlineShow, styles.avatar]} source={{uri: item.user.avatarUrl}}/>
-            <Text style={[styles.inlineShow, styles.userName]}>{item.user.name}</Text>
-            <Text style={styles.inlineShow}>{item.createdDate}</Text>
+            <Text style={[styles.inlineShow, styles.userName, styles.lineHeight]}>{item.user.name}</Text>
+            <Text style={[styles.inlineShow, styles.lineHeight, styles.grayText]}>{item.createdDate}</Text>
           </View>
           <View>
-            <ParseHTML
-              code={item.parsedText}
-              customTagToStyle={ParseRule}
+            <HtmlContent
+              content={item.parsedText}
             />
           </View>
           <View style={styles.vote}>
@@ -124,7 +119,7 @@ var QuestionDetailView = React.createClass({
 
 var styles = React.StyleSheet.create({
   scrollView: {
-    height: 300
+    height: height
   },
   avatar: {
     width: 32,
@@ -169,11 +164,14 @@ var styles = React.StyleSheet.create({
     justifyContent: 'flex-start',
     alignItems: 'stretch'
   },
+  lineHeight: {
+    lineHeight: 24
+  },
   qBody: {
     paddingTop: 10,
   },
   qTitle: {
-    fontSize: 16,
+    fontSize: 20,
     fontWeight: 'bold'
   },
 
@@ -194,7 +192,10 @@ var styles = React.StyleSheet.create({
     paddingTop: 8
   },
 
-  answerCont: {
+  answerItem: {
+    borderBottomWidth: 1,
+    padding: 10,
+    borderColor: '#E2E2E2'
   },
 
   answerHeader: {
@@ -206,7 +207,7 @@ var styles = React.StyleSheet.create({
   },
 
   answerBody: {
-    padding: 10
+    
   },
 
   grayText: {
