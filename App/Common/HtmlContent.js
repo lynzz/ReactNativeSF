@@ -27,7 +27,13 @@ class HtmlContent extends Component {
   }
 
   _onLinkPress (url) {
-    console.log(url)
+    if (/^https?:\/\/.*/.test(url)) {
+      link(url)
+    }
+
+    if (/^mailto:\w*/.test(url)) {
+      link(url)
+    }
   }
 
   _renderNode (node, index, parent, type) {
@@ -35,10 +41,11 @@ class HtmlContent extends Component {
     if (node.type == 'block' && type == 'block') {
       if (name == 'img') {
         var uri = SF_URL + node.attribs.src
-        
+        var match = node.attribs.src.match(/\/img\/(.*)$/)
+        var filename = match && match[1]
         return ( 
           <View 
-            key = {index}
+            key = {filename}
             style = {styles.imgWrapper}>
             <Image 
               source = {{uri: uri}}
