@@ -54,7 +54,7 @@ var IndexView = React.createClass({
           selected = {this.state.selectedBar == 'questions'}
           onPress = {() => this.setState({selectedBar: 'questions'})}
         >
-          {this._renderContent('问答', QuestionsView)}
+          {this._renderContent('问题', QuestionsView)}
         </TabBarIOS.Item>
         <TabBarIOS.Item
           title = '文章'
@@ -90,7 +90,8 @@ var IndexView = React.createClass({
 
 var styles = StyleSheet.create({
   container: {
-    flex: 1
+    flex: 1,
+    backgroundColor: '#009a61'
   }
 });
 

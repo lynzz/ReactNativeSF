@@ -12,9 +12,11 @@ var {
 var QuestionsListRowView = React.createClass({
   render: function () {
     var data = this.props.item;
+    
     return (
       <TouchableHighlight
-        underlayColor={'#ccc'}>
+        underlayColor={'#ccc'}
+        onPress={() => {this.props.selectQuestion(data.id, data.title)}}>
         <View style={styles.rowView}>
           <View style={styles.rowMain}>
             <Text style={styles.rowTextTitle}>{data.title}</Text>

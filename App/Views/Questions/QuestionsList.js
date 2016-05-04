@@ -36,15 +36,6 @@ const QuestionsListView = React.createClass({
   },
   _renderQuestionsList: function () {
     return (
-      /*<RefreshableListView
-        style={this.props.style}
-        dataSource={this.props.data}
-        loadData={this.props.loadData}
-        renderRow={this._renderQuestionsListRow}
-        description="下拉释放刷新"
-        refreshDescription="下拉释放刷新"
-        refreshingIndicatorComponent={MyRefreshingIndicator}
-      />*/
       <RefreshInfiniteListView
         ref={(list) => {this.list = list}}
         dataSource={this.props.data}
@@ -73,6 +64,7 @@ const QuestionsListView = React.createClass({
   _renderQuestionsListRow: function (data) {
     return (
       <QuestionsListRowView
+        selectQuestion={this.props.selectQuestion}
         item={data}/>
     )
   }

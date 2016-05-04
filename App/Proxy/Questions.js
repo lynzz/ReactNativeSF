@@ -1,37 +1,27 @@
 'use strict';
 
-const Util = require('./Util');
+import { EventEmitter } from 'events'
+
+import {fetchData} from './Util';
 
 import Api from '../Network/Api';
 
-const fetchData = (api, successFunc, errorFunc) => {
-  fetch(api)
-    .then(function(response){
-      return response.json();
-    })
-    .then(function(responseObj){
-      successFunc && successFunc(responseObj.data);
-    })
-    .catch((error) => {
-      errorFunc && errorFunc(error);
-    })
-    .done();
+const store = new EventEmitter()
+
+store.getNewestQuestion = () => {
+  return fetchData(Api.getNewestQuestion())
 }
 
-var getNewestQuestion = function(successFunc, errorFunc){
-  fetchData(Api.getNewestQuestion(), successFunc, errorFunc)
+store.getNewestQuestionByPage = (page) => {
+  return fetchData(Api.getNewestQuestionByPage(page))
 }
 
-var getNewestQuestionByPage = function(page, successFunc, errorFunc){
-  fetchData(Api.getNewestQuestionByPage(page), successFunc, errorFunc)
+store.getQuestionDetail = (id) => {
+  return fetchData(Api.getQuestionDetail(id))
 }
 
-var getQuestionDetail = function(id, successFunc, errorFunc){
-  fetchData(Api.getQuestionDetail(id), successFunc, errorFunc)
+store.getAnswers = (id) => {
+  return fetchData(Api.getAnswers(id))
 }
 
-export default {
-  getNewestQuestion: (successFunc, errorFunc) => fetchData(Api.getNewestQuestion(), successFunc, errorFunc),
-  getNewestQuestionByPage: (page, successFunc, errorFunc) => fetchData(Api.getNewestQuestionByPage(page), successFunc, errorFunc),
-  getQuestionDetail: (id, successFunc, errorFunc) => fetchData(Api.getQuestionDetail(id), successFunc, errorFunc)
-};
+export default store

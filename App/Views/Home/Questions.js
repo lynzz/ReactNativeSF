@@ -3,6 +3,7 @@
 const React = require('react-native');
 import Questions from '../../Proxy/Questions';
 import QuestionsListView from '../Questions/QuestionsList';
+import QuestionDetailView from '../Questions/QuestionDetail';
 
 var {
   Text,
@@ -32,6 +33,7 @@ var QuestionsView = React.createClass({
             data={this.state.dataSource}
             loadData={this._fetchData}
             page={this.state.page}
+            selectQuestion={this.selectQuestion}
             style={styles.groupList} />
         </View>
       );
@@ -43,6 +45,13 @@ var QuestionsView = React.createClass({
       );
     }
   },
+  selectQuestion: function (id, title) {
+    this.props.navigator.push({
+      title: title,
+      component: QuestionDetailView,
+      passProps: {questionId: id, navigator: this.props.navigator}
+    });
+  },
   componentDidMount: function () {
     this._fetchData();
   },
@@ -51,18 +60,19 @@ var QuestionsView = React.createClass({
     if (page === 1) {
       this.setState({dataRows: []});
     }
-    Questions.getNewestQuestionByPage(page, function (data) {
-      console.log('_fetchData');
-      let rows = that.state.dataRows.concat(data.rows)
-      that.setState({
-        dataSource: that.state.dataSource.cloneWithRows(rows),
-        dataRows: rows,
-        page: data.page,
-        loaded: true
+    Questions.getNewestQuestionByPage(page)
+      .then((data) => {
+        console.log('_fetchData');
+        let rows = that.state.dataRows.concat(data.rows)
+        that.setState({
+          dataSource: that.state.dataSource.cloneWithRows(rows),
+          dataRows: rows,
+          page: data.page,
+          loaded: true
+        });
+      }, (err) => {
+        console.log(err);
       });
-    }, function (err) {
-      console.log(err);
-    });
   }
 });
 
