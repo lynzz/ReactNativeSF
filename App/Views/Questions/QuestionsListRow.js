@@ -20,11 +20,13 @@ var QuestionsListRowView = React.createClass({
         <View style={styles.rowView}>
           <View style={styles.rowMain}>
             <Text style={styles.rowTextTitle}>{data.title}</Text>
-            <Text style={styles.rowTextAnswers}>{data.answers}</Text>
+            <View style={styles.cellAnswersWrap}>
+              <Text style={styles.ceilAnswers}>{data.answers}</Text>
+            </View>
           </View>
           <View style={styles.rowSub}>
-            <Text style={styles.rowTextName}>{data.user.name}</Text>
-            <Text style={styles.rowTextDate}>{data.createdDate}</Text>
+            <Text style={styles.cellName}>{data.user.name}</Text>
+            <Text style={styles.cellDate}>{data.createdDate}</Text>
           </View>
         </View>
       </TouchableHighlight>
@@ -52,24 +54,27 @@ var styles = React.StyleSheet.create({
     paddingRight: 10,
     flex: 1
   },
-  rowTextName: {
+  cellName: {
     flex: 1,
     fontSize: 10,
     color: '#666'
   },
-  rowTextDate: {
+  cellDate: {
     fontSize: 10,
     color: '#666'
   },
-  rowTextAnswers: {
+  cellAnswersWrap: {
     borderWidth: 1,
     borderColor: '#009a61',
     borderRadius: 3,
-    paddingLeft: 4,
-    paddingRight: 4,
     paddingTop: 2,
     paddingBottom: 2,
-    backgroundColor: '#009a61',
+    width: 30,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#009a61'
+  },
+  ceilAnswers: {
     color: '#fff'
   }
 });
