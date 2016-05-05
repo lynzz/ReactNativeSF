@@ -2,6 +2,8 @@
 
 var React = require('react-native');
 
+var Icon = require('react-native-vector-icons/Ionicons');
+
 var HtmlContent = require('../../Common/HtmlContent')
 import Questions from '../../Proxy/Questions'
 
@@ -26,6 +28,7 @@ var QuestionDetailView = React.createClass({
     }
   },
   render: function () {
+    let self = this
     if (this.state.loaded) {
       let data = this.state.questionData
       let Tags = data.tags.map((tag) => {
@@ -52,9 +55,7 @@ var QuestionDetailView = React.createClass({
               <Text style={[styles.inlineShow, styles.userName]}>{data.user.name}</Text>
               <Text style={styles.grayText}>{data.createdDate}提问</Text>
             </View>
-            <View style={styles.vote}>
-              <Text>{data.votes} 票</Text>
-            </View>
+            {self._renderVoteComment(data.votes, data.comments)}
           </View>
           <View style={styles.answerHeader}>
             <Text style={styles.grayText}>{data.answers} 回答</Text>
@@ -71,8 +72,18 @@ var QuestionDetailView = React.createClass({
     }
     
   },
+  _renderVoteComment (votes, comments) {
+    return (
+      <View style={styles.voco}>
+        <Text style={styles.vote}>{votes} 票</Text>
+        <Text style={styles.comment}><Icon name="ios-chatbubble-outline" size={16}/> {comments} 评论</Text>
+      </View>
+    )
+  },
+
   _renderAnswers () {
     let data = this.state.answersData.available
+    let self = this
 
     if (+this.state.questionData.answers === 0) {
       return (
@@ -92,9 +103,7 @@ var QuestionDetailView = React.createClass({
               content={item.parsedText}
             />
           </View>
-          <View style={styles.vote}>
-            <Text>{item.votes} 票</Text>
-          </View>
+          {self._renderVoteComment(item.votes, item.comments)}
         </View>
       )
     })
@@ -187,9 +196,20 @@ var styles = React.StyleSheet.create({
     marginRight: 10
   },
 
-  vote: {
+  voco: {
     paddingBottom: 8,
+    flexDirection: 'row',
     paddingTop: 8
+  },
+
+  vote: {
+    flex: 1,
+    color: '#ccc'
+  },
+
+  comment: {
+    flex: 1,
+    color: '#ccc'
   },
 
   answerItem: {

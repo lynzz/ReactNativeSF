@@ -12,24 +12,6 @@ const {
   View
   } = React;
 
-const MyRefreshingIndicator = React.createClass({
-  render() {
-    return (
-      <View>
-        <Text style={styles.refreshDescription}>下拉释放刷新1</Text>
-      </View>
-    )
-  }
-})
-
-const MyRefreshingIndicator1 = React.createClass({
-  render() {
-    return (
-      <RefreshableListView.RefreshingIndicator stylesheet={indicatorStylesheet} />
-    )
-  }
-})
-
 const QuestionsListView = React.createClass({
   render: function () {
     return this._renderQuestionsList();
